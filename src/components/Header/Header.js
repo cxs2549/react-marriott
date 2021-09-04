@@ -7,25 +7,33 @@ import { Link, NavLink } from 'react-router-dom'
 import './Burger/burger.css'
 
 const StyledHeader = styled.header`
-	padding: .5rem 1.75rem;
-	padding-bottom: 0;
-	.active {
-		position: relative;
-        opacity: 1;
-		&::after {
-			content: '';
-			background-color: var(--brandRed);
-			position: absolute;
-			height: 4px;
-			width: 100%;
-			top: 22px;
-            border-radius: 99999px;
-			left: 0;
-		}
-	}
 	#wrapper {
+		padding: 0 .7rem;
+		padding-bottom: 0;
 		max-width: var(--maxWidth);
 		margin: 0 auto;
+		@media (min-width: 640px) {
+			padding: 0 1.5rem;
+		}
+		@media (min-width: 1280px) {
+			padding: 0;
+		}
+	}
+	#navLinks {
+		.active {
+			position: relative;
+			opacity: 1;
+			&::after {
+				content: '';
+				background-color: var(--brandRed);
+				position: absolute;
+				height: 4px;
+				width: 100%;
+				top: 22px;
+				border-radius: 99999px;
+				left: 0;
+			}
+		}
 	}
 	#burger {
 		#menu {
@@ -39,17 +47,23 @@ const StyledHeader = styled.header`
 			z-index: 10;
 			color: #282626;
 			overflow-y: scroll;
-			.active {
-				background: var(--brandRed);
-				opacity: 1 !important;
+			height: 70vh;
+            display: flex;
+            flex-flow: column;
+            justify-content: space-between;
+			#menuLinks {
+				.active {
+					opacity: 1 !important;
+					color: var(--brandRed);
+				}
 			}
 			.listItem {
 				width: 100%;
-				font-size: 150%;
+				font-size: 120%;
 				display: flex;
 				a {
 					border-radius: 4px;
-					padding: 1rem;
+					/* padding: 1rem; */
 					width: 100%;
 					height: 100%;
 					opacity: .5;
@@ -74,7 +88,7 @@ const StyledHeader = styled.header`
 	}
 	#top {
 		svg {
-			font-size: 2rem;
+			font-size: 1.8rem;
 			padding: 0 2px;
 			border: 1px solid transparent;
 		}
@@ -119,7 +133,7 @@ const Header = () => {
 	]
 	const menuRef = useRef()
 	return (
-		<StyledHeader className="border-b border-borderColor" open={isOpen}>
+		<StyledHeader className="border-b border-gray-400" open={isOpen}>
 			<div id="wrapper">
 				<div
 					id="top"
@@ -132,8 +146,11 @@ const Header = () => {
 								<span />
 								<span />
 							</div>
-							<div id="menu" className="p-8 ">
-								<ul className="flex flex-col items-center justify-center uppercase font-bold gap-2">
+							<div id="menu" className="p-5 ">
+								<ul
+									id="menuLinks"
+									className="flex flex-col items-center justify-center capitalize font-bold gap-4"
+								>
 									{bottomLinks.map((link, i) => (
 										<li key={i} className="listItem" onClick={handleClose}>
 											<NavLink to={link.to} end>
@@ -142,15 +159,28 @@ const Header = () => {
 										</li>
 									))}
 								</ul>
+								<div className="flex items-center text-xs gap-1">
+									<div className="text-xs">
+										<i className="fa fa-globe" aria-hidden="true" />
+									</div>
+									<span>English</span>
+								</div>
 							</div>
 							<div id="overlay" onClick={handleClose} />
 						</div>
 					</div>
 					<div className="flex lg:flex-col lg:w-full">
-						<ul className="hidden lg:flex items-center gap-6  h-8 ml-24 text-sm xl:text-base lg:order-2">
+						<ul
+							id="navLinks"
+							className="hidden lg:flex items-center gap-6  h-8 ml-24 text-sm xl:text-base lg:order-2 xl:justify-between"
+						>
 							{bottomLinks.map((link, i) => (
 								<li key={i} className="capitalize font-medium whitespace-nowrap">
-									<NavLink to={link.to} end className="opacity-70">
+									<NavLink
+										to={link.to}
+										end
+										className="opacity-70 hover:opacity-100"
+									>
 										{link.name}
 									</NavLink>
 								</li>
@@ -161,7 +191,7 @@ const Header = () => {
 								{topLinks.map((link, i) => (
 									<Link
 										to="/"
-										className="font-medium whitespace-nowrap text-xs"
+										className="font-medium whitespace-nowrap text-xs opacity-80 hover:opacity-100"
 									>
 										{link}
 									</Link>

@@ -18,7 +18,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     :root {
-        --maxWidth: 1140px;
+        --maxWidth: 1120px;
         --brandRed: #8D1922;
     }
 `
