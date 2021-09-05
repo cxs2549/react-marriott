@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import logo from '../../assets/logo.png'
 import { AiOutlineUser } from 'react-icons/ai'
 import { BsBriefcase, BsQuestionCircle } from 'react-icons/bs'
+import { HiChevronRight } from 'react-icons/hi'
 import { Link, NavLink } from 'react-router-dom'
 import './Burger/burger.css'
+import useOnClickOutside from 'use-onclickoutside'
 
 const StyledHeader = styled.header`
 	#wrapper {
@@ -19,34 +21,19 @@ const StyledHeader = styled.header`
 			padding: 0;
 		}
 	}
-	#navLinks {
-		.active {
-			position: relative;
-			opacity: 1;
-			&::after {
-				content: '';
-				background-color: var(--brandRed);
-				position: absolute;
-				height: 4px;
-				width: 100%;
-				top: 22px;
-				border-radius: 99999px;
-				left: 0;
-			}
-		}
-	}
+	
 	#burger {
 		#menu {
 			position: fixed;
 			z-index: 1000;
 			width: 100%;
-			top: 73px;
+			top: 63px;
 			left: ${(props) => (props.open ? '0' : '-100%')};
 			max-width: 100%;
 			transition: left .25s;
-			background-color: var(--brandRed);
+			background-color: #fff;
 			z-index: 10;
-			color: white;
+			color: #333;
 			overflow-y: scroll;
 			height: 70vh;
             display: flex;
@@ -64,10 +51,9 @@ const StyledHeader = styled.header`
 				display: flex;
 				a {
 					border-radius: 4px;
-					/* padding: 1rem; */
 					width: 100%;
 					height: 100%;
-					opacity: .5;
+					opacity: .9;
 					&:hover {
 						opacity: 1;
 					}
@@ -81,7 +67,7 @@ const StyledHeader = styled.header`
 			width: 100%;
 			height: 100vh;
 			background-color: rgba(0, 0, 0, .6);
-			z-index: -100;
+			z-index: -0;
 			opacity: ${(props) => (props.open ? 1 : 0)};
 			transition: opacity .2s;
 			transition-delay: .2s;
@@ -89,14 +75,14 @@ const StyledHeader = styled.header`
 	}
 	#top {
 		svg {
-			font-size: 1.8rem;
+			font-size: 1.75rem;
 			padding: 0 2px;
 			border: 1px solid transparent;
 		}
 	}
 	#logo {
 		position: absolute;
-		z-index: 1;
+		z-index: 11;
 		left: 50%;
 		top: 60%;
 		transform: translate(-50%, -50%);
@@ -124,15 +110,19 @@ const Header = () => {
 	}
 	const topLinks = [ 'COVID-19', 'Help', 'English', 'Sign In or Join', 'My Trips' ]
 	const bottomLinks = [
-		{ name: 'home', to: '/' },
 		{ name: 'find & reserve', to: '/find' },
 		{ name: 'special offers', to: '/specials' },
 		{ name: 'vacations', to: '/vacations' },
 		{ name: 'our brands', to: '/brands' },
 		{ name: 'our credit cards', to: '/credit' },
-		{ name: 'about mariott bonvoy', to: '/bonvoy' }
+		{ name: 'about marriott bonvoy', to: '/bonvoy' }
 	]
 	const menuRef = useRef()
+	useOnClickOutside(menuRef, () => {
+		setIsOpen(false)
+		document.getElementById('nav-icon1').classList.remove('open')
+		document.body.classList.remove('freezeflow')
+	})
 	return (
 		<StyledHeader className="border-b border-gray-400" open={isOpen}>
 			<div id="wrapper" className="mx-auto xl:max-w-6xl">
@@ -150,18 +140,19 @@ const Header = () => {
 							<div id="menu" className="p-5 ">
 								<ul
 									id="menuLinks"
-									className="flex flex-col items-center justify-center capitalize font-bold gap-4"
+									className="flex flex-col items-center justify-center capitalize font-semibold gap-4"
 								>
 									{bottomLinks.map((link, i) => (
-										<li key={i} className="listItem" onClick={handleClose}>
-											<NavLink to={link.to} end>
-												{link.name}
-											</NavLink>
+										<li key={i} className="listItem">
+											<Link to={link.to} end className="flex items-center justify-between">
+												<span>{link.name}</span>
+												<HiChevronRight />
+											</Link>
 										</li>
 									))}
 								</ul>
 								<div className="flex items-center text-xs gap-1">
-									<div className="text-xs">
+									<div>
 										<i className="fa fa-globe" aria-hidden="true" />
 									</div>
 									<span>English</span>
@@ -180,7 +171,7 @@ const Header = () => {
 									<NavLink
 										to={link.to}
 										end
-										className="opacity-70 hover:opacity-100"
+										className="opacity-80 hover:opacity-100"
 									>
 										{link.name}
 									</NavLink>
