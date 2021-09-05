@@ -10,8 +10,8 @@ const StyledHeader = styled.header`
 	#wrapper {
 		padding: 0 .7rem;
 		padding-bottom: 0;
-		max-width: var(--maxWidth);
-		margin: 0 auto;
+		/* max-width: var(--maxWidth); */
+		/* margin: 0 auto; */
 		@media (min-width: 640px) {
 			padding: 0 1.5rem;
 		}
@@ -38,14 +38,15 @@ const StyledHeader = styled.header`
 	#burger {
 		#menu {
 			position: fixed;
+			z-index: 1000;
 			width: 100%;
 			top: 73px;
-			right: ${(props) => (props.open ? '0' : '-100%')};
+			left: ${(props) => (props.open ? '0' : '-100%')};
 			max-width: 100%;
-			transition: right .25s;
-			background-color: white;
+			transition: left .25s;
+			background-color: var(--brandRed);
 			z-index: 10;
-			color: #282626;
+			color: white;
 			overflow-y: scroll;
 			height: 70vh;
             display: flex;
@@ -54,7 +55,7 @@ const StyledHeader = styled.header`
 			#menuLinks {
 				.active {
 					opacity: 1 !important;
-					color: var(--brandRed);
+					color: #fff;
 				}
 			}
 			.listItem {
@@ -82,7 +83,7 @@ const StyledHeader = styled.header`
 			background-color: rgba(0, 0, 0, .6);
 			z-index: -100;
 			opacity: ${(props) => (props.open ? 1 : 0)};
-			transition: opacity .25s;
+			transition: opacity .2s;
 			transition-delay: .2s;
 		}
 	}
@@ -95,7 +96,7 @@ const StyledHeader = styled.header`
 	}
 	#logo {
 		position: absolute;
-		z-index: 19;
+		z-index: 1;
 		left: 50%;
 		top: 60%;
 		transform: translate(-50%, -50%);
@@ -134,7 +135,7 @@ const Header = () => {
 	const menuRef = useRef()
 	return (
 		<StyledHeader className="border-b border-gray-400" open={isOpen}>
-			<div id="wrapper">
+			<div id="wrapper" className="mx-auto xl:max-w-6xl">
 				<div
 					id="top"
 					className="flex justify-between lg:justify-start lg:gap-4 relative py-3"
