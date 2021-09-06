@@ -1,10 +1,14 @@
 import styled from 'styled-components'
 import Hero from './Hero/Hero'
-const StyledHome = styled.div``
+import Stays from './Stays/Stays'
+const StyledHome = styled.div`
+	background-color: #fff;
+`
 const Home = () => {
 	return (
 		<StyledHome>
 			<Hero />
+			<Stays />
 		</StyledHome>
 	)
 }

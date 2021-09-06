@@ -144,7 +144,7 @@ const Footer = () => {
 				</div>
 				{/* copy */}
 				<p className="text-xs">
-					© 2021 phobia mediaworks for Marriott International, Inc. All rights reserved.
+					© 2021 Phobia Webworks for Marriott International, Inc. All rights reserved.
 					Marriott Proprietary Information
 				</p>
 				{/* sitelinks */}

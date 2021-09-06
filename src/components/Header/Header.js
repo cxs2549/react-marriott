@@ -99,7 +99,7 @@ const StyledHeader = styled.header`
 		width: 112px;
 		@media (min-width: 1024px) {
 			left: 4.5rem;
-			top: 75%;
+			top: 80%;
 		}
 		@media (min-width: 1280px) {
 			left: 3.5rem;
@@ -147,7 +147,7 @@ const Header = () => {
 				<StyledHeader
 					open={isOpen}
 					ref={headerRef}
-					className="transform transition duration-300 shadow"
+					className="transform transition duration-300 shadow "
 				>
 					<div id="wrapper" className="mx-auto lg:max-w-6xl py-3">
 						<div
@@ -189,7 +189,7 @@ const Header = () => {
 									<div id="overlay" onClick={handleClose} />
 								</div>
 							</div>
-							<div className="flex lg:flex-col lg:w-full">
+							<div className="flex lg:flex-col lg:w-full lg:gap-y-3">
 								<ul
 									id="navLinks"
 									className="hidden lg:flex items-center gap-6  h-8 ml-32 text-sm xl:text-base lg:order-2 lg:justify-between"
@@ -209,7 +209,7 @@ const Header = () => {
 										</li>
 									))}
 								</ul>
-								<div className="flex items-center gap-5 lg:gap-6 h-8 lg:ml-24 lg:justify-end">
+								<div className="flex items-center gap-5 lg:gap-6 h-8 lg:ml-24 lg:justify-end ">
 									<div className="hidden lg:flex gap-5">
 										{topLinks.map((link, i) => (
 											<Link
@@ -237,8 +237,8 @@ const Header = () => {
 					</div>
 				</StyledHeader>
 
-				<div id="options" className="bg-lightGray p-5 text-gray-700">
-					<div className="bg-white grid grid-cols-2 justify-between p-4 md:py-5 xl:py-6 rounded-lg lg:max-w-4xl mx-auto md:text-lg xl:text-xl md:px-5 xl:px-6 shadow">
+				<div id="options" className="bg-lightGray p-4 px-3 text-gray-700">
+					<div className="bg-white grid grid-cols-2 justify-between p-4 md:py-5 xl:py-6 rounded-lg lg:max-w-4xl mx-auto md:text-lg md:px-5 xl:px-6 shadow">
 						<div className="border-r border-gray-300 cursor-pointer">
 							<div className="flex items-center gap-2 capitalize text-brandRed ">
 								<div className="">
