@@ -1,59 +1,59 @@
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import logo from '../../assets/logo.png'
+import logoNobg from '../../assets/logo-nobg.png'
 import { AiOutlineUser } from 'react-icons/ai'
 import { BsBriefcase, BsQuestionCircle } from 'react-icons/bs'
 import { HiChevronRight } from 'react-icons/hi'
 import { Link, NavLink } from 'react-router-dom'
 import './Burger/burger.css'
 import useOnClickOutside from 'use-onclickoutside'
+import Headroom from 'react-headroom'
 
 const StyledHeader = styled.header`
-	#wrapper {
-		padding: 0 .7rem;
-		padding-bottom: 0;
-		/* max-width: var(--maxWidth); */
-		/* margin: 0 auto; */
-		@media (min-width: 640px) {
-			padding: 0 1.5rem;
-		}
-		@media (min-width: 1280px) {
-			padding: 0;
-		}
+	position: sticky;
+	width: 100%;
+	z-index: 100;
+	/* height: 86px; */
+	background-color: #fff;
+	/* transition: transform 5s; */
+	@media (min-width: 1024px) {
+		/* height: 114px; */
 	}
-	
+	#wrapper {
+	}
+
 	#burger {
 		#menu {
 			position: fixed;
-			z-index: 1000;
+			z-index: 10;
 			width: 100%;
-			top: 63px;
+			top: 87px;
 			left: ${(props) => (props.open ? '0' : '-100%')};
 			max-width: 100%;
 			transition: left .25s;
 			background-color: #fff;
-			z-index: 10;
+			/* z-index: 100; */
 			color: #333;
 			overflow-y: scroll;
-			height: 70vh;
-            display: flex;
-            flex-flow: column;
-            justify-content: space-between;
+			height: 62vh;
+			display: flex;
+			flex-flow: column;
+			justify-content: space-between;
 			#menuLinks {
-				.active {
-					opacity: 1 !important;
-					color: #fff;
-				}
 			}
 			.listItem {
 				width: 100%;
-				font-size: 120%;
+				font-size: 105%;
 				display: flex;
+				@media (min-width: 768px) {
+					font-size: 120%;
+				}
 				a {
 					border-radius: 4px;
 					width: 100%;
 					height: 100%;
-					opacity: .9;
+					/* opacity: .9; */
 					&:hover {
 						opacity: 1;
 					}
@@ -62,7 +62,7 @@ const StyledHeader = styled.header`
 		}
 		#overlay {
 			position: fixed;
-			top: 73px;
+			top: 86px;
 			left: ${(props) => (props.open ? '0' : '-100%')};
 			width: 100%;
 			height: 100vh;
@@ -74,6 +74,13 @@ const StyledHeader = styled.header`
 		}
 	}
 	#top {
+		background-color: #151515;
+		color: white;
+		@media (min-width: 1024px) {
+			background-color: #fff;
+			color: #333;
+		}
+
 		svg {
 			font-size: 1.75rem;
 			padding: 0 2px;
@@ -84,15 +91,18 @@ const StyledHeader = styled.header`
 		position: absolute;
 		z-index: 11;
 		left: 50%;
-		top: 60%;
+		top: 50%;
 		transform: translate(-50%, -50%);
 		background-repeat: no-repeat;
 		background-size: contain;
-		height: 96px;
-		width: 96px;
+		height: 112px;
+		width: 112px;
 		@media (min-width: 1024px) {
-			left: 2.5rem;
-			top: 50%;
+			left: 4.5rem;
+			top: 75%;
+		}
+		@media (min-width: 1280px) {
+			left: 3.5rem;
 		}
 	}
 `
@@ -123,88 +133,139 @@ const Header = () => {
 		document.getElementById('nav-icon1').classList.remove('open')
 		document.body.classList.remove('freezeflow')
 	})
+
+	const handlePin = () => {
+		headerRef.current.style.top = '0'
+	}
+	const handleUnpin = () => {
+		headerRef.current.style.top = '-100%'
+	}
+	const headerRef = useRef()
 	return (
-		<StyledHeader className="border-b border-gray-400" open={isOpen}>
-			<div id="wrapper" className="mx-auto xl:max-w-6xl">
-				<div
-					id="top"
-					className="flex justify-between lg:justify-start lg:gap-4 relative py-3"
+		<Headroom onPin={handlePin} onUnpin={handleUnpin}>
+			<div>
+				<StyledHeader
+					open={isOpen}
+					ref={headerRef}
+					className="transform transition duration-300 shadow"
 				>
-					<div>
-						<div id="burger" className="lg:hidden" ref={menuRef}>
-							<div id="nav-icon1" onClick={handleOpen}>
-								<span />
-								<span />
-								<span />
+					<div id="wrapper" className="mx-auto lg:max-w-6xl py-3">
+						<div
+							id="top"
+							className="flex items-center justify-between lg:justify-start lg:gap-4 relative px-4 my-3 xl:px-0 xl:py-0"
+						>
+							<div>
+								<div id="burger" className="lg:hidden" ref={menuRef}>
+									<div id="nav-icon1" onClick={handleOpen}>
+										<span />
+										<span />
+										<span />
+									</div>
+									<div id="menu" className="p-5 pt-8 ">
+										<ul
+											id="menuLinks"
+											className="flex flex-col items-center justify-center capitalize font-medium gap-5"
+										>
+											{bottomLinks.map((link, i) => (
+												<li key={i} className="listItem">
+													<Link
+														to={link.to}
+														end
+														className="flex items-center justify-between"
+													>
+														<span>{link.name}</span>
+														<HiChevronRight />
+													</Link>
+												</li>
+											))}
+										</ul>
+										<div className="flex items-center text-xs gap-1 cursor-pointer">
+											<div>
+												<i className="fa fa-globe" aria-hidden="true" />
+											</div>
+											<span className="font-medium">English</span>
+										</div>
+									</div>
+									<div id="overlay" onClick={handleClose} />
+								</div>
 							</div>
-							<div id="menu" className="p-5 ">
+							<div className="flex lg:flex-col lg:w-full">
 								<ul
-									id="menuLinks"
-									className="flex flex-col items-center justify-center capitalize font-semibold gap-4"
+									id="navLinks"
+									className="hidden lg:flex items-center gap-6  h-8 ml-32 text-sm xl:text-base lg:order-2 lg:justify-between"
 								>
 									{bottomLinks.map((link, i) => (
-										<li key={i} className="listItem">
-											<Link to={link.to} end className="flex items-center justify-between">
-												<span>{link.name}</span>
-												<HiChevronRight />
-											</Link>
+										<li
+											key={i}
+											className="capitalize font-medium whitespace-nowrap"
+										>
+											<NavLink
+												to={link.to}
+												end
+												className="opacity-90 hover:opacity-100"
+											>
+												{link.name}
+											</NavLink>
 										</li>
 									))}
 								</ul>
-								<div className="flex items-center text-xs gap-1">
-									<div>
-										<i className="fa fa-globe" aria-hidden="true" />
+								<div className="flex items-center gap-5 lg:gap-6 h-8 lg:ml-24 lg:justify-end">
+									<div className="hidden lg:flex gap-5">
+										{topLinks.map((link, i) => (
+											<Link
+												to="/"
+												className="font-medium whitespace-nowrap text-xs opacity-80 hover:opacity-100"
+											>
+												{link}
+											</Link>
+										))}
 									</div>
-									<span>English</span>
+									<div className="flex  gap-4 md:gap-6 lg:hidden">
+										<BsQuestionCircle />
+										<BsBriefcase />
+										<AiOutlineUser />
+									</div>
 								</div>
 							</div>
-							<div id="overlay" onClick={handleClose} />
-						</div>
-					</div>
-					<div className="flex lg:flex-col lg:w-full">
-						<ul
-							id="navLinks"
-							className="hidden lg:flex items-center gap-6  h-8 ml-24 text-sm xl:text-base lg:order-2 xl:justify-between"
-						>
-							{bottomLinks.map((link, i) => (
-								<li key={i} className="capitalize font-medium whitespace-nowrap">
-									<NavLink
-										to={link.to}
-										end
-										className="opacity-80 hover:opacity-100"
-									>
-										{link.name}
-									</NavLink>
-								</li>
-							))}
-						</ul>
-						<div className="flex items-center gap-5 lg:gap-6 h-8 lg:ml-24 lg:justify-end">
-							<div className="hidden lg:flex gap-5">
-								{topLinks.map((link, i) => (
-									<Link
-										to="/"
-										className="font-medium whitespace-nowrap text-xs opacity-80 hover:opacity-100"
-									>
-										{link}
-									</Link>
-								))}
-							</div>
-							<div className="flex  gap-4 md:gap-6 lg:hidden">
-								<BsQuestionCircle />
-								<BsBriefcase />
-								<AiOutlineUser />
+							<div id="logo" className="lg:pr-2">
+								<Link to="/">
+									<img src={logoNobg} className="lg:hidden" alt="" />
+									<img src={logo} className="hidden lg:block" alt="" />
+								</Link>
 							</div>
 						</div>
 					</div>
+				</StyledHeader>
 
-					<div id="logo">
-						<Link to="/">
-							<img src={logo} alt="" />
-						</Link>
+				<div id="options" className="bg-lightGray p-5 text-gray-700">
+					<div className="bg-white grid grid-cols-2 justify-between p-4 md:py-5 xl:py-6 rounded-lg lg:max-w-4xl mx-auto md:text-lg xl:text-xl md:px-5 xl:px-6 shadow">
+						<div className="border-r border-gray-300 cursor-pointer">
+							<div className="flex items-center gap-2 capitalize text-brandRed ">
+								<div className="">
+									<i className="fa fa-map-marker" aria-hidden="true" />
+								</div>
+								<span>destination</span>
+							</div>
+							<span className="font-medium text-gray-500">Where next?</span>
+						</div>
+						<div className="pl-4 md:pl-5 xl:pl-6 cursor-pointer flex items-center justify-between">
+							<div className=" ">
+								<div className="flex items-center gap-2 capitalize text-brandRed ">
+									<div className="">
+										<i className="fa fa-calendar" aria-hidden="true" />
+									</div>
+									<span>dates</span>
+								</div>
+								<span className="font-medium text-gray-500">Add dates</span>
+							</div>
+							<div className="hidden md:block">
+								<button className="bg-gray-900 text-white font-medium rounded-full px-5 py-2">Find Hotels</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</StyledHeader>
+		</Headroom>
 	)
 }
 export default Header

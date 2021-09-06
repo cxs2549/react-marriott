@@ -87,7 +87,7 @@ const Footer = () => {
 		}
 	]
 	return (
-		<StyledFooter className="border-t px-6 sm:px-6 py-6 xl:px-0">
+		<StyledFooter className="px-5 sm:px-6 py-6 xl:px-0">
 			<div id="wrapper" className="mx-auto xl:max-w-6xl">
 				<img src={logo} className="w-40 mx-auto mb-8" alt="" />
 				{/* accordions */}
@@ -144,7 +144,7 @@ const Footer = () => {
 				</div>
 				{/* copy */}
 				<p className="text-xs">
-					© 2021 phobia webworks for Marriott International, Inc. All rights reserved.
+					© 2021 phobia mediaworks for Marriott International, Inc. All rights reserved.
 					Marriott Proprietary Information
 				</p>
 				{/* sitelinks */}
